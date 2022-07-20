@@ -1,0 +1,25 @@
+{
+  "name": "top-gun-final-project",
+  "version": "1.0.0",
+  "description": "Cron Admin CRUD to manage different CRON tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AngeloCaruso/top-gun-final-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AngeloCaruso/top-gun-final-project/issues"
+  },
+  "homepage": "https://github.com/AngeloCaruso/top-gun-final-project#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.4.6"
+  }
+}
