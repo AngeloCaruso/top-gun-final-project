@@ -9,7 +9,6 @@ const cronManager = require('../../app/utils/cron-setup');
 router.get('/', (req, res) => {
     service.all()
         .then((crons) => {
-            cronManager.tasks();
             response.success(res, crons, 'Crons list');
         })
         .catch((err) => {
@@ -61,7 +60,7 @@ router.delete('/:id', (req, res) => {
 });
 
 router.get('/logs', (req, res) => {
-    
+
 })
 
 module.exports = router;

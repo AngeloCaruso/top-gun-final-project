@@ -14,11 +14,6 @@ const cron = new schema({
         type: Boolean,
         required: true
     },
-    save_history: {
-        type: Boolean,
-        required: false,
-        default: 0
-    },
     schedule: {
         type: String,
         required: true
