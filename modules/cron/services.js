@@ -9,7 +9,7 @@ db.connect(env.db, {
 });
 
 exports.all = async () => {
-    return await model.find().exec();
+    return await model.find({ active: 1 }).exec();
 }
 
 exports.find = async (id) => {

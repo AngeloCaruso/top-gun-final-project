@@ -20,6 +20,6 @@ const cron = new schema({
     }
 })
 
-const model = mongoose.model('crons', cron);
+const model = mongoose.model('cron', cron);
 
 module.exports = model;
