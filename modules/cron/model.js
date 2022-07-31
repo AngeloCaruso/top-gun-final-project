@@ -18,8 +18,8 @@ const cron = new schema({
         type: String,
         required: true
     },
-    userId:{
-        type:String,
+    userId: {
+        type: String,
         required: true
     }
 })

@@ -17,7 +17,7 @@ const LocalStrategy = new Strategy({ usernameField: 'email' }, async (email, pas
       done(boom.unauthorized(), false)
     }
 
-    done(null, {id:user._id.toString(),email:user.email,active:user.active})
+    done(null, { id: user._id.toString(), email: user.email, active: user.active })
   } catch (error) {
     done(error, false)
   }

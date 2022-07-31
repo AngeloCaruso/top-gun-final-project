@@ -11,7 +11,7 @@ db.connect(env.db, {
 });
 
 exports.store = async (user) => {
-    user.password = await bcrypt.hash(user.password,10);
+    user.password = await bcrypt.hash(user.password, 10);
     const newUser = new model(user);
     delete newUser.password;
     return await newUser.save();
@@ -22,11 +22,11 @@ exports.find = async (id) => {
 }
 
 exports.findByEmailAndPassword = async (email, password) => {
-    return await model.findOne({email: email, password: password});
+    return await model.findOne({ email: email, password: password });
 }
 
 exports.findByEmail = async (email) => {
-    return await model.findOne({email: email});
+    return await model.findOne({ email: email });
 }
 
 exports.all = async () => {

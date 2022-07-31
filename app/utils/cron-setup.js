@@ -17,7 +17,7 @@ exports.create = (id, schedule, url) => {
             });
 
             res.on('end', () => {
-                responseData =  data.toString();
+                responseData = data.toString();
                 cronLogService.store({
                     cron_id: id,
                     response_log: JSON.stringify(responseData)

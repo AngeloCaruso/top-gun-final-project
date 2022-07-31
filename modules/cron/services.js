@@ -13,7 +13,7 @@ exports.all = async () => {
 }
 
 exports.allByUser = async (userId) => {
-    return await model.find({ active: 1,userId }).exec();
+    return await model.find({ active: 1, userId }).exec();
 }
 
 exports.find = async (id) => {
@@ -33,6 +33,6 @@ exports.delete = async (id) => {
     return await model.findByIdAndDelete(id);
 }
 
-exports.isCronOwner = async (userId,cronId) => {
-    return await model.exists({userId,_id:cronId})
+exports.isCronOwner = async (userId, cronId) => {
+    return await model.exists({ userId, _id: cronId })
 }
