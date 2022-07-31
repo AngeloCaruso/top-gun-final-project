@@ -5,7 +5,6 @@ const https = require('https');
 
 exports.create = (id, schedule, url) => {
     cron.scheduleJob(id, schedule, () => {
-        console.group('Cron execution')
         console.log(`Executing job ${id}`);
         console.log(`Sending a request to: ${url} on ${schedule}`);
 
@@ -23,7 +22,6 @@ exports.create = (id, schedule, url) => {
                     response_log: JSON.stringify(responseData)
                 });
                 console.log('Job succeeded!');
-                console.groupEnd('Cron execution');
             });
         });
 
@@ -32,9 +30,12 @@ exports.create = (id, schedule, url) => {
     });
 }
 
-exports.update = (id, schedule, url) => {
+exports.update = (id, schedule, url, active) => {
     this.delete(id);
-    this.create(id, schedule, url)
+
+    if (active) {
+        this.create(id, schedule, url)
+    }
 }
 
 exports.delete = (id) => {

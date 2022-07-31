@@ -13,7 +13,7 @@ exports.all = async () => {
 }
 
 exports.allByUser = async (userId) => {
-    return await model.find({ active: 1, userId }).exec();
+    return await model.find({ userId }).exec();
 }
 
 exports.find = async (id) => {
