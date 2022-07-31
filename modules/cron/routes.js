@@ -5,58 +5,65 @@ const response = require('../../app/utils/response');
 
 const service = require('./services');
 const cronManager = require('../../app/utils/cron-setup');
+const passport = require('passport');
+const boom = require('@hapi/boom');
 
-router.get('/', (req, res) => {
-    service.all()
-        .then((crons) => {
-            response.success(res, crons, 'Crons list');
-        })
-        .catch((err) => {
-            response.error(res, err, 500);
-        });
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        const crons = await service.allByUser(req.user.sub);
+        response.success(res, crons, 'Crons list');
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.get('/:id', (req, res) => {
-    service.find(req.params.id)
-        .then((cron) => {
-            response.success(res, cron, 'Cron details');
-        })
-        .catch((err) => {
-            response.error(res, err, 500);
-        })
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        if (! await service.isCronOwner(req.user.sub, req.params.id)) {
+            throw boom.unauthorized()
+        }
+        const crons = await service.find(req.params.id);
+        response.success(res, crons, 'Crons details');
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.post('/', (req, res) => {
-    service.store(req.body)
-        .then((cron) => {
-            cronManager.create(cron.id, cron.schedule, cron.url);
-            response.success(res, cron, 'Cron created!', 201);
-        })
-        .catch((err) => {
-            response.error(res, err, 500);
-        });
+router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        req.body.userId = req.user.sub
+        const cron = await service.store(req.body)
+        cronManager.create(cron.id, cron.schedule, cron.url);
+        response.success(res, cron, 'Cron created!', 201);
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.patch('/:id', (req, res) => {
-    service.update(req.params.id, req.body)
-        .then((cron) => {
-            cronManager.update(cron.id, cron.schedule, cron.url)
-            response.success(res, cron, 'Cron updated!', 201);
-        })
-        .catch((err) => {
-            response.error(res, err, 500);
-        });
+router.patch('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        if (! await service.isCronOwner(req.user.sub, req.params.id)) {
+            throw boom.unauthorized()
+        }
+        const cron = await service.update(req.params.id, req.body)
+        cronManager.update(cron.id, cron.schedule, cron.url)
+        response.success(res, cron, 'Cron updated!', 200);
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.delete('/:id', (req, res) => {
-    service.delete(req.params.id)
-        .then((cron) => {
-            cronManager.delete(cron.id);
-            response.success(res, null, 'Cron deleted!', 201);
-        })
-        .catch((err) => {
-            response.error(res, err, 500);
-        });
+router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        if (! await service.isCronOwner(req.user.sub, req.params.id)) {
+            throw boom.unauthorized()
+        }
+        const cron = await service.delete(req.params.id)
+        cronManager.delete(cron.id);
+        response.success(res, null, 'Cron deleted!', 200);
+    } catch (error) {
+        next(error);
+    }
 });
 
 router.get('/logs', (req, res) => {

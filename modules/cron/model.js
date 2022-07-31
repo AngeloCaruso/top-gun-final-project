@@ -17,6 +17,10 @@ const cron = new schema({
     schedule: {
         type: String,
         required: true
+    },
+    userId:{
+        type:String,
+        required: true
     }
 })
 
