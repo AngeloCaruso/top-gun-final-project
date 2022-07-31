@@ -1,5 +1,6 @@
 //MAIN LIBRARIES
 const express = require('express');
+require('dotenv').config()
 //END MAIN LIBRARIES
 
 //APP LIBRARIES
