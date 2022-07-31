@@ -14,4 +14,5 @@ app.use(express.json());
 routes(app);
 cronManager.recreateSchedules()
 
+
 app.listen(env.port, () => { console.log(`Initialized server on port ${env.port}`) });
