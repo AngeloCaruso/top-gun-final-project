@@ -22,8 +22,8 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (req,
         if (! await service.isCronOwner(req.user.sub, req.params.id)) {
             throw boom.unauthorized()
         }
-        const crons = await service.find(req.params.id);
-        response.success(res, crons, 'Crons details');
+        const cron = await service.find(req.params.id);
+        response.success(res, cron, 'Crons details');
     } catch (error) {
         next(error);
     }
@@ -33,7 +33,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
     try {
         req.body.userId = req.user.sub
         const cron = await service.store(req.body)
-        cronManager.create(cron.id, cron.schedule, cron.url);
+        cronManager.create(cron.id, cron.schedule, cron.url, cron.userId);
         response.success(res, cron, 'Cron created!', 201);
     } catch (error) {
         next(error);
@@ -46,7 +46,7 @@ router.patch('/:id', passport.authenticate('jwt', { session: false }), async (re
             throw boom.unauthorized()
         }
         const cron = await service.update(req.params.id, req.body)
-        cronManager.update(cron.id, cron.schedule, cron.url)
+        cronManager.update(cron.id, cron.schedule, cron.url, cron.userId)
         response.success(res, cron, 'Cron updated!', 200);
     } catch (error) {
         next(error);
@@ -65,9 +65,5 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), async (r
         next(error);
     }
 });
-
-router.get('/logs', (req, res) => {
-
-})
 
 module.exports = router;

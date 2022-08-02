@@ -3,8 +3,14 @@ const schema = mongoose.Schema;
 
 const cronLog = new schema({
     cron_id: {
-        type: String,
-        require: true
+        type: schema.Types.ObjectId,
+        require: true,
+        ref: 'cron'
+    },
+    user_id: {
+        type: schema.Types.ObjectId,
+        require: true,
+        ref: 'user'
     },
     response_log: {
         type: String,
@@ -12,7 +18,7 @@ const cronLog = new schema({
     },
     created_at: {
         type: Date,
-        default: Date.now()
+        require: true
     }
 });
 

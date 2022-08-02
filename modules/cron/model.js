@@ -19,8 +19,9 @@ const cron = new schema({
         required: true
     },
     userId: {
-        type: String,
-        required: true
+        type: schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     }
 })
 
