@@ -16,11 +16,11 @@ exports.create = (id, schedule, url, user) => {
             });
 
             res.on('end', () => {
-                responseData = data.toString();
                 cronLogService.store({
                     cron_id: id,
                     user_id: user,
-                    response_log: JSON.stringify(responseData)
+                    response_log: data.toString(),
+                    status: res.statusCode
                 });
                 console.log('Job succeeded!');
             });
@@ -33,7 +33,6 @@ exports.create = (id, schedule, url, user) => {
 
 exports.update = (id, schedule, url, active, user) => {
     this.delete(id);
-
     if (active) {
         this.create(id, schedule, url, user)
     }

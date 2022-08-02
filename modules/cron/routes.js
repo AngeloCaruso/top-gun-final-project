@@ -45,8 +45,8 @@ router.patch('/:id', passport.authenticate('jwt', { session: false }), async (re
         if (! await service.isCronOwner(req.user.sub, req.params.id)) {
             throw boom.unauthorized()
         }
-        const cron = await service.update(req.params.id, req.body)
-        cronManager.update(cron.id, cron.schedule, cron.url, cron.userId)
+        const cron = await service.update(req.params.id, req.body);
+        cronManager.update(cron.id, cron.schedule, cron.url, cron.active, cron.userId)
         response.success(res, cron, 'Cron updated!', 200);
     } catch (error) {
         next(error);

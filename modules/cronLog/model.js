@@ -16,6 +16,10 @@ const cronLog = new schema({
         type: String,
         require: true
     },
+    status: {
+        type: String,
+        require: true
+    },
     created_at: {
         type: Date,
         require: true
