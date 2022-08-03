@@ -1,5 +1,6 @@
 const db = require('mongoose');
 const model = require('./model');
+const cronLogModel = require('../cronLog/model');
 
 const env = require('../../config/env');
 
@@ -30,6 +31,7 @@ exports.update = async (id, data) => {
 }
 
 exports.delete = async (id) => {
+    await cronLogModel.find({cron_id:id}).remove();
     return await model.findByIdAndDelete(id);
 }
 
