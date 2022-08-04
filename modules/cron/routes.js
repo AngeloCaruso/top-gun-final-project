@@ -33,7 +33,9 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
     try {
         req.body.userId = req.user.sub
         const cron = await service.store(req.body)
-        cronManager.create(cron.id, cron.schedule, cron.url, cron.userId);
+        if(cron.active){
+            cronManager.create(cron.id, cron.schedule, cron.url, cron.userId);
+        }
         response.success(res, cron, 'Cron created!', 201);
     } catch (error) {
         next(error);

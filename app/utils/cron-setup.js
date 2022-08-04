@@ -6,9 +6,9 @@ const https = require('https');
 exports.create = (id, schedule, url, user) => {
     cron.scheduleJob(id, schedule, () => {
         console.log(`Executing job ${id}`);
-        console.log(`Sending a request to: ${url} on ${schedule}`);
-
+        
         https.get(url, (res) => {
+            console.log(`Sending a request to: ${url} on ${schedule}`);
             let data = '';
 
             res.on('data', (chunk) => {
