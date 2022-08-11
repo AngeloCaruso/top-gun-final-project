@@ -6,7 +6,7 @@ const boom = require('@hapi/boom');
 
 exports.siginToken = (user) => {
     const payload = {
-        sub: user.id,
+        sub: user.id || user._id.toString(),
     }
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: config.jwtExpirationTime })
     const data = { user, token }
