@@ -6,6 +6,7 @@ const response = require('../../app/utils/response');
 
 const service = require('./services');
 const cronService = require('../cron/services');
+const boom = require('@hapi/boom')
 
 router.get('/user', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
